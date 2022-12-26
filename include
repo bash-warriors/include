@@ -1,22 +1,8 @@
 function include() {
-    local FILE="$1"
+    source "$1" 2> /dev/null
 
-    # if [ "${FILE:0:1}" != "/" ]; then
-    #     local dir="$(dirname "$FILE")"
-    #     local program_dir="$(dirname "$PWD/$0")"
-
-    #     if [ "$dir" = "." ]; then
-    #         [ -f "/usr/lib/$FILE" ] && FILE="/usr/lib/$FILE"
-    #     else
-    #         [ -f "/usr/lib/$FILE" ] && FILE="/usr/lib/$FILE"
-    #         [ -f "$( dirname "$PWD/$0" )/$FILE" ] && FILE="$( dirname "$PWD/$0" )/$FILE"
-    #     fi
-    # fi
-
-    if [ -f "$FILE" ]; then
-        source "$FILE"
-    else
-        echo "include: could not import $FILE" >&2
+    if [ $? -ne 0 ]; then
+        echo "include: could not include $1" >&2
         exit 1
     fi
 }
