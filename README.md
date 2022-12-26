@@ -13,6 +13,9 @@ An example is in the [`example`](example) directory. The program `main.sh`
 imports symbols from `lib.sh`, which contains the following:
 
 ```bash
+#!/bin/bash
+# lib.sh
+
 a=1
 b=2
 local c=3
@@ -22,6 +25,26 @@ string="a b c"
 function say_hello() {
     echo "Hello"
 }
+```
+
+The `main.sh` script prints the external symbols and calls the external function
+`say_hello`:
+
+```bash
+#!/bin/bash
+# main.sh
+
+source include
+
+include lib.sh
+
+echo "a: $a"
+echo "b: $b"
+echo "c: $c"
+
+echo "$string"
+
+say_hello
 ```
 
 To run the example:
@@ -41,6 +64,7 @@ a b c
 Hello
 ```
 
+As demonstrated, include is able to import external variables and functions.
 Notice that `$c` is empty because `c` is defined as `local` in `lib.sh`.
 
 ## How to include include
@@ -73,7 +97,7 @@ You could write an installer for your Bash program and in the installer, install
 the include script to somewhere like `$HOME/.local/bin` for example (or anything
 as long as it is in the user's `$PATH`). Then in your Bash scripts, simply do:
 
-```
+```bash
 source include
 ```
 
@@ -91,4 +115,4 @@ sure to `source include` in the scripts that need it.
 ## License
 
 This software is in the public domain. For more information, visit
-<unlicense.org>
+<https://unlicense.org>
